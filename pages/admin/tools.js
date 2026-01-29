@@ -45,13 +45,15 @@ export default function AdminToolsPage({ user }) {
   };
 
   return (
-    <Layout title="Admin Tools">
+    <Layout title="Herramientas Admin">
       <div className="animate-fadeIn">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-techcorp-900">Admin Tools</h1>
+          <h1 className="text-2xl font-bold text-techcorp-900">
+            Herramientas de Administración
+          </h1>
           <p className="text-techcorp-600 mt-1">
-            Network diagnostics and system utilities
+            Diagnósticos de red y utilidades del sistema
           </p>
         </div>
 
@@ -60,8 +62,9 @@ export default function AdminToolsPage({ user }) {
           <div className="flex items-center gap-2">
             <span className="text-yellow-600 text-xl">⚠️</span>
             <p className="text-sm text-yellow-800">
-              <strong>Admin Access Required:</strong> These tools are restricted
-              to system administrators only.
+              <strong>Acceso de Administrador Requerido:</strong> Estas
+              herramientas están restringidas solo para administradores del
+              sistema.
             </p>
           </div>
         </div>
@@ -70,11 +73,11 @@ export default function AdminToolsPage({ user }) {
           {/* Network Ping Tool */}
           <div className="card">
             <h2 className="text-lg font-semibold text-techcorp-900 mb-4 flex items-center gap-2">
-              <span>🔧</span> Network Connectivity Test
+              <span>🔧</span> Prueba de Conectividad de Red
             </h2>
             <p className="text-sm text-techcorp-600 mb-4">
-              Verify network connectivity to internal or external servers by
-              entering an IP address.
+              Verifica la conectividad de red hacia servidores internos o
+              externos ingresando una dirección IP.
             </p>
 
             <form onSubmit={handlePing} className="space-y-4">
@@ -83,7 +86,7 @@ export default function AdminToolsPage({ user }) {
                   htmlFor="ip"
                   className="block text-sm font-medium text-techcorp-700 mb-2"
                 >
-                  IP Address or Hostname
+                  Dirección IP o Nombre de Host
                 </label>
                 <input
                   type="text"
@@ -91,12 +94,12 @@ export default function AdminToolsPage({ user }) {
                   value={ip}
                   onChange={(e) => setIp(e.target.value)}
                   className="input-field"
-                  placeholder="e.g., 8.8.8.8 or google.com"
+                  placeholder="ej., 8.8.8.8 o google.com"
                   required
                 />
                 {/* Hint intencional */}
                 <p className="mt-1 text-xs text-techcorp-400">
-                  Enter the target IP address to check connectivity
+                  Ingresa la dirección IP objetivo para verificar conectividad
                 </p>
               </div>
 
@@ -105,7 +108,7 @@ export default function AdminToolsPage({ user }) {
                 disabled={loading}
                 className="btn-primary w-full disabled:opacity-50"
               >
-                {loading ? "Running..." : "Run Ping Test"}
+                {loading ? "Ejecutando..." : "Ejecutar Prueba de Ping"}
               </button>
             </form>
 
@@ -113,7 +116,7 @@ export default function AdminToolsPage({ user }) {
             {(output || error) && (
               <div className="mt-4">
                 <label className="block text-sm font-medium text-techcorp-700 mb-2">
-                  Output
+                  Resultado
                 </label>
                 <pre
                   className={`p-4 rounded-lg text-sm font-mono overflow-x-auto max-h-64 ${
@@ -131,38 +134,38 @@ export default function AdminToolsPage({ user }) {
           {/* System Info Card */}
           <div className="card">
             <h2 className="text-lg font-semibold text-techcorp-900 mb-4 flex items-center gap-2">
-              <span>📊</span> System Information
+              <span>📊</span> Información del Sistema
             </h2>
 
             <div className="space-y-3 text-sm">
               <div className="flex justify-between py-2 border-b border-techcorp-100">
-                <span className="text-techcorp-600">Current User</span>
+                <span className="text-techcorp-600">Usuario Actual</span>
                 <span className="font-medium text-techcorp-900">
                   {user?.username || "N/A"}
                 </span>
               </div>
               <div className="flex justify-between py-2 border-b border-techcorp-100">
-                <span className="text-techcorp-600">Role</span>
+                <span className="text-techcorp-600">Rol</span>
                 <span className="font-medium text-techcorp-900 capitalize">
                   {user?.role || "N/A"}
                 </span>
               </div>
               <div className="flex justify-between py-2 border-b border-techcorp-100">
-                <span className="text-techcorp-600">User ID</span>
+                <span className="text-techcorp-600">ID de Usuario</span>
                 <span className="font-medium text-techcorp-900">
                   {user?.id || "N/A"}
                 </span>
               </div>
               <div className="flex justify-between py-2 border-b border-techcorp-100">
-                <span className="text-techcorp-600">System Version</span>
+                <span className="text-techcorp-600">Versión del Sistema</span>
                 <span className="font-medium text-techcorp-900">
                   SupportHub v2.1.0
                 </span>
               </div>
               <div className="flex justify-between py-2">
-                <span className="text-techcorp-600">Environment</span>
+                <span className="text-techcorp-600">Entorno</span>
                 <span className="font-medium text-techcorp-900">
-                  Development
+                  Desarrollo
                 </span>
               </div>
             </div>
@@ -170,7 +173,7 @@ export default function AdminToolsPage({ user }) {
             {/* Debug links */}
             <div className="mt-6 pt-4 border-t border-techcorp-100">
               <p className="text-xs text-techcorp-400 mb-2">
-                Quick Links (Dev Only):
+                Enlaces Rápidos (Solo Dev):
               </p>
               <div className="space-y-1">
                 <a
@@ -178,7 +181,7 @@ export default function AdminToolsPage({ user }) {
                   target="_blank"
                   className="text-xs text-accent-600 hover:underline block"
                 >
-                  → View All Users (Debug API)
+                  → Ver Todos los Usuarios (API Debug)
                 </a>
               </div>
             </div>

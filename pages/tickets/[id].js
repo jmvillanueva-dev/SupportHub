@@ -34,24 +34,24 @@ export default function TicketDetailPage() {
       if (data.success) {
         setTicket(data.ticket);
       } else {
-        setError(data.error || "Ticket not found");
+        setError(data.error || "Ticket no encontrado");
       }
     } catch (err) {
-      setError("Failed to load ticket");
+      setError("Error al cargar el ticket");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Layout title={ticket ? `Ticket #${ticket.id}` : "Ticket Details"}>
+    <Layout title={ticket ? `Ticket #${ticket.id}` : "Detalles del Ticket"}>
       <div className="animate-fadeIn">
         {/* Breadcrumb */}
         <nav className="mb-6">
           <ol className="flex items-center space-x-2 text-sm text-techcorp-500">
             <li>
               <Link href="/dashboard" className="hover:text-accent-600">
-                Dashboard
+                Panel Principal
               </Link>
             </li>
             <li>/</li>
@@ -63,7 +63,7 @@ export default function TicketDetailPage() {
         {loading ? (
           <div className="text-center py-12">
             <div className="w-12 h-12 border-4 border-accent-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="mt-4 text-techcorp-600">Loading ticket...</p>
+            <p className="mt-4 text-techcorp-600">Cargando ticket...</p>
           </div>
         ) : error ? (
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
@@ -71,7 +71,7 @@ export default function TicketDetailPage() {
             <h3 className="text-lg font-medium text-red-800 mb-2">Error</h3>
             <p className="text-red-600 mb-4">{error}</p>
             <Link href="/dashboard" className="btn-primary">
-              Back to Dashboard
+              Volver al Panel
             </Link>
           </div>
         ) : ticket ? (
@@ -82,7 +82,7 @@ export default function TicketDetailPage() {
             {/* Actions */}
             <div className="mt-6 flex gap-3">
               <Link href="/dashboard" className="btn-secondary">
-                ← Back to Dashboard
+                ← Volver al Panel
               </Link>
             </div>
 

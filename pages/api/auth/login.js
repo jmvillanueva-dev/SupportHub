@@ -19,7 +19,7 @@ export default function handler(req, res) {
   // Validación básica
   if (!username || !password) {
     return res.status(400).json({
-      error: "Username and password are required",
+      error: "Usuario y contraseña son requeridos",
     });
   }
 
@@ -38,7 +38,7 @@ export default function handler(req, res) {
 
       return res.status(200).json({
         success: true,
-        message: "Login successful",
+        message: "Inicio de sesión exitoso",
         user: result.user.toPublicJSON(),
       });
     }
