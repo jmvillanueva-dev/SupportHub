@@ -3,12 +3,13 @@
  * Representa un usuario del sistema SupportHub
  */
 class User {
-  constructor({ id, username, password, role, avatar_url }) {
+  constructor({ id, username, password, role, avatar_url, created_at }) {
     this.id = id;
     this.username = username;
     this.password = password;
     this.role = role; // 'admin' | 'user'
     this.avatar_url = avatar_url;
+    this.created_at = created_at;
   }
 
   isAdmin() {
@@ -21,6 +22,7 @@ class User {
       username: this.username,
       role: this.role,
       avatar_url: this.avatar_url,
+      created_at: this.created_at,
     };
   }
 
@@ -33,6 +35,7 @@ class User {
       password: this.password,
       role: this.role,
       avatar_url: this.avatar_url,
+      created_at: this.created_at,
     };
   }
 }
