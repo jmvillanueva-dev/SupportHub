@@ -45,10 +45,10 @@ export default function LoginPage() {
         router.push("/dashboard");
       } else {
         // Mostrar error detallado (ayuda a SQLi error-based)
-        setError(data.error || "Authentication failed");
+        setError(data.error || "Error de autenticación");
       }
     } catch (err) {
-      setError("Network error. Please try again.");
+      setError("Error de red. Por favor intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -57,8 +57,11 @@ export default function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login | TechCorp SupportHub</title>
-        <meta name="description" content="Login to TechCorp SupportHub" />
+        <title>Iniciar Sesión | TechCorp SupportHub</title>
+        <meta
+          name="description"
+          content="Iniciar sesión en TechCorp SupportHub"
+        />
       </Head>
 
       {/* 
@@ -89,13 +92,13 @@ export default function LoginPage() {
               <span className="text-4xl font-bold text-white">TC</span>
             </div>
             <h1 className="text-3xl font-bold text-white">TechCorp Inc.</h1>
-            <p className="text-techcorp-400 mt-2">Internal Support System</p>
+            <p className="text-techcorp-400 mt-2">Sistema de Soporte Interno</p>
           </div>
 
           {/* Login Card */}
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <h2 className="text-2xl font-semibold text-techcorp-900 mb-6 text-center">
-              Sign In
+              Iniciar Sesión
             </h2>
 
             {error && (
@@ -111,7 +114,7 @@ export default function LoginPage() {
                   htmlFor="username"
                   className="block text-sm font-medium text-techcorp-700 mb-2"
                 >
-                  Username
+                  Usuario
                 </label>
                 <input
                   type="text"
@@ -121,7 +124,7 @@ export default function LoginPage() {
                   onChange={handleChange}
                   required
                   className="input-field"
-                  placeholder="Enter your username"
+                  placeholder="Ingrese su usuario"
                   autoComplete="username"
                 />
               </div>
@@ -131,7 +134,7 @@ export default function LoginPage() {
                   htmlFor="password"
                   className="block text-sm font-medium text-techcorp-700 mb-2"
                 >
-                  Password
+                  Contraseña
                 </label>
                 <input
                   type="password"
@@ -141,7 +144,7 @@ export default function LoginPage() {
                   onChange={handleChange}
                   required
                   className="input-field"
-                  placeholder="Enter your password"
+                  placeholder="Ingrese su contraseña"
                   autoComplete="current-password"
                 />
               </div>
@@ -172,25 +175,25 @@ export default function LoginPage() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Signing in...
+                    Iniciando sesión...
                   </span>
                 ) : (
-                  "Sign In"
+                  "Iniciar Sesión"
                 )}
               </button>
             </form>
 
             <div className="mt-6 pt-6 border-t border-techcorp-100">
               <p className="text-xs text-techcorp-400 text-center">
-                Contact IT Support if you need assistance accessing your
-                account.
+                Contacte al Soporte de TI si necesita ayuda para acceder a su
+                cuenta.
               </p>
             </div>
           </div>
 
           {/* Footer */}
           <p className="text-center text-techcorp-500 text-sm mt-8">
-            © 2024 TechCorp Inc. All rights reserved.
+            © 2024 TechCorp Inc. Todos los derechos reservados.
           </p>
         </div>
       </div>

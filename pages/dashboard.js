@@ -46,41 +46,43 @@ export default function DashboardPage() {
   };
 
   return (
-    <Layout title="Dashboard">
+    <Layout title="Panel Principal">
       <div className="animate-fadeIn">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-techcorp-900">Dashboard</h1>
+            <h1 className="text-2xl font-bold text-techcorp-900">
+              Panel Principal
+            </h1>
             <p className="text-techcorp-600 mt-1">
-              Manage your support tickets
+              Gestiona tus tickets de soporte
             </p>
           </div>
           <Link href="/tickets/new" className="btn-primary">
-            + New Ticket
+            + Nuevo Ticket
           </Link>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           <div className="card bg-gradient-to-br from-accent-500 to-accent-600 text-white">
-            <p className="text-accent-100 text-sm">Total Tickets</p>
+            <p className="text-accent-100 text-sm">Total de Tickets</p>
             <p className="text-3xl font-bold mt-1">{stats.total}</p>
           </div>
           <div className="card">
-            <p className="text-techcorp-500 text-sm">Open</p>
+            <p className="text-techcorp-500 text-sm">Abiertos</p>
             <p className="text-3xl font-bold text-green-600 mt-1">
               {stats.open}
             </p>
           </div>
           <div className="card">
-            <p className="text-techcorp-500 text-sm">In Progress</p>
+            <p className="text-techcorp-500 text-sm">En Progreso</p>
             <p className="text-3xl font-bold text-yellow-600 mt-1">
               {stats.in_progress}
             </p>
           </div>
           <div className="card">
-            <p className="text-techcorp-500 text-sm">Closed</p>
+            <p className="text-techcorp-500 text-sm">Cerrados</p>
             <p className="text-3xl font-bold text-gray-600 mt-1">
               {stats.closed}
             </p>
@@ -100,9 +102,12 @@ export default function DashboardPage() {
               }`}
             >
               {status === "all"
-                ? "All Tickets"
-                : status.replace("_", " ").charAt(0).toUpperCase() +
-                  status.replace("_", " ").slice(1)}
+                ? "Todos los Tickets"
+                : status === "open"
+                  ? "Abiertos"
+                  : status === "in_progress"
+                    ? "En Progreso"
+                    : "Cerrados"}
             </button>
           ))}
         </div>
@@ -111,7 +116,7 @@ export default function DashboardPage() {
         {loading ? (
           <div className="text-center py-12">
             <div className="w-12 h-12 border-4 border-accent-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="mt-4 text-techcorp-600">Loading tickets...</p>
+            <p className="mt-4 text-techcorp-600">Cargando tickets...</p>
           </div>
         ) : error ? (
           <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
@@ -121,15 +126,15 @@ export default function DashboardPage() {
           <div className="text-center py-12 bg-white rounded-xl border border-techcorp-100">
             <div className="text-5xl mb-4">🎫</div>
             <h3 className="text-lg font-medium text-techcorp-900 mb-2">
-              No tickets found
+              No se encontraron tickets
             </h3>
             <p className="text-techcorp-600 mb-4">
               {filter === "all"
-                ? "You haven't created any tickets yet."
-                : `No ${filter.replace("_", " ")} tickets.`}
+                ? "Aún no has creado ningún ticket."
+                : `No hay tickets ${filter === "open" ? "abiertos" : filter === "in_progress" ? "en progreso" : "cerrados"}.`}
             </p>
             <Link href="/tickets/new" className="btn-primary">
-              Create your first ticket
+              Crea tu primer ticket
             </Link>
           </div>
         ) : (

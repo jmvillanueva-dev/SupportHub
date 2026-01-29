@@ -34,7 +34,7 @@ export default function Home() {
         <title>SupportHub | TechCorp Inc.</title>
         <meta
           name="description"
-          content="TechCorp Inc. Internal Support System"
+          content="Sistema Interno de Soporte de TechCorp Inc."
         />
       </Head>
 
@@ -46,7 +46,7 @@ export default function Home() {
           <h1 className="text-2xl font-semibold text-white mb-2">
             TechCorp Inc.
           </h1>
-          <p className="text-techcorp-400">Loading SupportHub...</p>
+          <p className="text-techcorp-400">Cargando SupportHub...</p>
           <div className="mt-6">
             <div className="w-8 h-8 border-4 border-accent-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
           </div>
