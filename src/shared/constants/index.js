@@ -46,6 +46,21 @@ const STATUS_ICONS = {
   closed: "⚫",
 };
 
+// Labels traducidos para prioridades
+const PRIORITY_LABELS = {
+  low: "Baja",
+  medium: "Media",
+  high: "Alta",
+  critical: "Crítica",
+};
+
+// Labels traducidos para estados
+const STATUS_LABELS = {
+  open: "Abierto",
+  in_progress: "En Progreso",
+  closed: "Cerrado",
+};
+
 // Configuración de la empresa ficticia
 const COMPANY = {
   name: "TechCorp Inc.",
@@ -61,5 +76,7 @@ module.exports = {
   PRIORITY_COLORS,
   STATUS_COLORS,
   STATUS_ICONS,
+  PRIORITY_LABELS,
+  STATUS_LABELS,
   COMPANY,
 };

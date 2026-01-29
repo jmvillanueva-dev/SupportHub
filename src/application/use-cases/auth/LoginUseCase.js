@@ -25,7 +25,7 @@ class LoginUseCase {
     if (!username || !password) {
       return {
         success: false,
-        error: "Username and password are required",
+        error: "Usuario y contraseña son requeridos",
       };
     }
 
@@ -45,7 +45,7 @@ class LoginUseCase {
 
       return {
         success: false,
-        error: "Invalid credentials",
+        error: "Credenciales inválidas",
       };
     } catch (error) {
       console.error("[LoginUseCase] Error:", error.message);
