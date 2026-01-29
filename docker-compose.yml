@@ -1,7 +1,8 @@
 version: "3.8"
 
 services:
-  supporthub:
+  # --- LA VÍCTIMA (Tu App Next.js) ---
+  vulndesk_app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,29 +12,39 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      # Persistir la base de datos
       - supporthub-data:/app/data
+    networks:
+      - hacking_net
     restart: unless-stopped
-    # Nota: Este contenedor es intencionalmente inseguro para pruebas de penetración
-    # NO usar en producción real
+
+  # --- EL ATACANTE (Kali Linux) ---
+  kali_attacker:
+    image: kalilinux/kali-rolling
+    container_name: kali_attack
+    tty: true               
+    stdin_open: true        
+    networks:
+      - hacking_net
+
+networks:
+  hacking_net:
+    driver: bridge
 
 volumes:
   supporthub-data:
+
 # ============================================
 # SupportHub - Vulnerable Ticket System
 # Para uso educativo en Hacking Ético
 # ============================================
 #
 # Iniciar:
-#   docker-compose up --build
+#   docker-compose up -d
 #
 # Acceder:
 #   http://localhost:3000
 #
-# Detener:
-#   docker-compose down
-#
-# Limpiar datos:
-#   docker-compose down -v
-#
+# Entrar a Kali:
+#   docker exec -it kali_attack /bin/bash
 # ============================================
+
