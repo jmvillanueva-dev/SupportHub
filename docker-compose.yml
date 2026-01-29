@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  supporthub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: supporthub-vulnerable
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Persistir la base de datos
+      - supporthub-data:/app/data
+    restart: unless-stopped
+    # Nota: Este contenedor es intencionalmente inseguro para pruebas de penetración
+    # NO usar en producción real
+
+volumes:
+  supporthub-data:
+# ============================================
+# SupportHub - Vulnerable Ticket System
+# Para uso educativo en Hacking Ético
+# ============================================
+#
+# Iniciar:
+#   docker-compose up --build
+#
+# Acceder:
+#   http://localhost:3000
+#
+# Detener:
+#   docker-compose down
+#
+# Limpiar datos:
+#   docker-compose down -v
+#
+# ============================================
