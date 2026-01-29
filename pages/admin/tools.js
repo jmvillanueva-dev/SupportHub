@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../src/presentation/components/layout/Layout";
 
 /**
@@ -7,11 +7,28 @@ import Layout from "../../src/presentation/components/layout/Layout";
  * ⚠️ [VULNERABLE - OS COMMAND INJECTION]
  * La herramienta de ping no sanitiza el input
  */
-export default function AdminToolsPage({ user }) {
+export default function AdminToolsPage() {
   const [ip, setIp] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Obtener información del usuario actual
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("/api/auth/me");
+        const data = await response.json();
+        if (data.success) {
+          setUser(data.user);
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handlePing = async (e) => {
     e.preventDefault();

@@ -26,17 +26,17 @@ const TICKET_PRIORITY = {
 
 // Colores por prioridad (para UI)
 const PRIORITY_COLORS = {
-  low: "bg-gray-100 text-gray-800",
-  medium: "bg-blue-100 text-blue-800",
-  high: "bg-orange-100 text-orange-800",
-  critical: "bg-red-100 text-red-800",
+  low: "bg-slate-100 text-slate-700 border border-slate-200",
+  medium: "bg-blue-100 text-blue-700 border border-blue-200",
+  high: "bg-orange-100 text-orange-700 border border-orange-200",
+  critical: "bg-red-100 text-red-700 border border-red-200",
 };
 
 // Colores por estado (para UI)
 const STATUS_COLORS = {
-  open: "bg-green-100 text-green-800",
-  in_progress: "bg-yellow-100 text-yellow-800",
-  closed: "bg-gray-100 text-gray-800",
+  open: "bg-emerald-100 text-emerald-700 border border-emerald-200",
+  in_progress: "bg-amber-100 text-amber-700 border border-amber-200",
+  closed: "bg-slate-100 text-slate-600 border border-slate-200",
 };
 
 // Iconos por estado
