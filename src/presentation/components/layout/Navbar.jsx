@@ -57,7 +57,7 @@ export default function Navbar({ user, onLogout }) {
                     : "text-techcorp-300 hover:bg-techcorp-800 hover:text-white"
                 }`}
               >
-                Dashboard
+                Panel Principal
               </Link>
               <Link
                 href="/tickets/new"
@@ -67,7 +67,7 @@ export default function Navbar({ user, onLogout }) {
                     : "text-techcorp-300 hover:bg-techcorp-800 hover:text-white"
                 }`}
               >
-                New Ticket
+                Nuevo Ticket
               </Link>
               {user?.role === "admin" && (
                 <Link
@@ -78,7 +78,7 @@ export default function Navbar({ user, onLogout }) {
                       : "text-techcorp-300 hover:bg-techcorp-800 hover:text-white"
                   }`}
                 >
-                  Admin Tools
+                  Herramientas Admin
                 </Link>
               )}
             </div>
@@ -104,7 +104,7 @@ export default function Navbar({ user, onLogout }) {
                     onClick={handleLogout}
                     className="px-3 py-2 text-sm font-medium text-techcorp-300 hover:text-white hover:bg-techcorp-800 rounded-md transition-colors"
                   >
-                    Logout
+                    Cerrar Sesión
                   </button>
                 </>
               )}

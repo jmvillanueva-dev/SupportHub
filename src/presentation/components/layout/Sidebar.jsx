@@ -13,25 +13,25 @@ export default function Sidebar({ user }) {
 
   const menuItems = [
     {
-      name: "Dashboard",
+      name: "Panel Principal",
       href: "/dashboard",
       icon: "📊",
       roles: ["user", "admin"],
     },
     {
-      name: "My Tickets",
+      name: "Mis Tickets",
       href: "/dashboard",
       icon: "🎫",
       roles: ["user", "admin"],
     },
     {
-      name: "Create Ticket",
+      name: "Crear Ticket",
       href: "/tickets/new",
       icon: "➕",
       roles: ["user", "admin"],
     },
     {
-      name: "Admin Tools",
+      name: "Herramientas Admin",
       href: "/admin/tools",
       icon: "🔧",
       roles: ["admin"],
@@ -76,7 +76,7 @@ export default function Sidebar({ user }) {
             {/* Info del usuario */}
             <div className="px-4">
               <p className="text-xs font-medium text-techcorp-500 uppercase tracking-wider mb-3">
-                Account Info
+                Info de Cuenta
               </p>
               <div className="bg-techcorp-50 rounded-lg p-3">
                 <p className="text-sm font-medium text-techcorp-900">

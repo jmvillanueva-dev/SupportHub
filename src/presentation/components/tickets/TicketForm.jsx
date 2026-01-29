@@ -46,10 +46,10 @@ export default function TicketForm() {
         // Redirigir al nuevo ticket
         router.push(`/tickets/${data.ticket.id}`);
       } else {
-        setError(data.error || "Failed to create ticket");
+        setError(data.error || "Error al crear el ticket");
       }
     } catch (err) {
-      setError("Network error. Please try again.");
+      setError("Error de red. Por favor intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -69,7 +69,7 @@ export default function TicketForm() {
           htmlFor="title"
           className="block text-sm font-medium text-techcorp-700 mb-2"
         >
-          Title <span className="text-red-500">*</span>
+          Título <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -79,7 +79,7 @@ export default function TicketForm() {
           onChange={handleChange}
           required
           className="input-field"
-          placeholder="Brief description of the issue"
+          placeholder="Breve descripción del problema"
         />
       </div>
 
@@ -89,7 +89,7 @@ export default function TicketForm() {
           htmlFor="priority"
           className="block text-sm font-medium text-techcorp-700 mb-2"
         >
-          Priority
+          Prioridad
         </label>
         <select
           id="priority"
@@ -98,10 +98,10 @@ export default function TicketForm() {
           onChange={handleChange}
           className="input-field"
         >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="critical">Critical</option>
+          <option value="low">Baja</option>
+          <option value="medium">Media</option>
+          <option value="high">Alta</option>
+          <option value="critical">Crítica</option>
         </select>
       </div>
 
@@ -111,7 +111,7 @@ export default function TicketForm() {
           htmlFor="description"
           className="block text-sm font-medium text-techcorp-700 mb-2"
         >
-          Description <span className="text-red-500">*</span>
+          Descripción <span className="text-red-500">*</span>
         </label>
         <textarea
           id="description"
@@ -121,12 +121,12 @@ export default function TicketForm() {
           required
           rows={6}
           className="input-field resize-none"
-          placeholder="Describe your issue in detail. You can use HTML for formatting."
+          placeholder="Describe tu problema en detalle. Puedes usar HTML para formato."
         />
         {/* Hint intencional para XSS */}
         <p className="mt-1 text-xs text-techcorp-400">
-          Tip: HTML formatting is supported (e.g., &lt;b&gt;bold&lt;/b&gt;,
-          &lt;i&gt;italic&lt;/i&gt;)
+          Consejo: Se soporta formato HTML (ej., &lt;b&gt;negrita&lt;/b&gt;,
+          &lt;i&gt;cursiva&lt;/i&gt;)
         </p>
       </div>
 
@@ -137,14 +137,14 @@ export default function TicketForm() {
           onClick={() => router.back()}
           className="btn-secondary"
         >
-          Cancel
+          Cancelar
         </button>
         <button
           type="submit"
           disabled={loading}
           className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Creating..." : "Create Ticket"}
+          {loading ? "Creando..." : "Crear Ticket"}
         </button>
       </div>
     </form>

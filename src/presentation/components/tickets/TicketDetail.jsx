@@ -3,6 +3,8 @@ import {
   PRIORITY_COLORS,
   STATUS_COLORS,
   STATUS_ICONS,
+  PRIORITY_LABELS,
+  STATUS_LABELS,
 } from "../../../shared/constants";
 
 /**
@@ -20,7 +22,7 @@ export default function TicketDetail({ ticket }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("es-ES", {
       weekday: "long",
       year: "numeric",
       month: "long",
@@ -47,12 +49,12 @@ export default function TicketDetail({ ticket }) {
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass}`}
             >
-              {statusIcon} {ticket.status.replace("_", " ")}
+              {statusIcon} {STATUS_LABELS[ticket.status] || ticket.status}
             </span>
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${priorityClass}`}
             >
-              {ticket.priority}
+              {PRIORITY_LABELS[ticket.priority] || ticket.priority}
             </span>
           </div>
         </div>
@@ -61,25 +63,25 @@ export default function TicketDetail({ ticket }) {
       {/* Metadatos */}
       <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
         <div>
-          <p className="text-techcorp-500">Created</p>
+          <p className="text-techcorp-500">Creado</p>
           <p className="text-techcorp-900 font-medium">
             {formatDate(ticket.created_at)}
           </p>
         </div>
         <div>
-          <p className="text-techcorp-500">Last Updated</p>
+          <p className="text-techcorp-500">Última Actualización</p>
           <p className="text-techcorp-900 font-medium">
             {formatDate(ticket.updated_at)}
           </p>
         </div>
         <div>
-          <p className="text-techcorp-500">Reporter ID</p>
+          <p className="text-techcorp-500">ID del Reportador</p>
           <p className="text-techcorp-900 font-medium">
-            User #{ticket.user_id}
+            Usuario #{ticket.user_id}
           </p>
         </div>
         <div>
-          <p className="text-techcorp-500">Priority Level</p>
+          <p className="text-techcorp-500">Nivel de Prioridad</p>
           <p className="text-techcorp-900 font-medium capitalize">
             {ticket.priority}
           </p>
@@ -89,7 +91,7 @@ export default function TicketDetail({ ticket }) {
       {/* Descripción - VULNERABLE A XSS */}
       <div className="border-t border-techcorp-100 pt-6">
         <h2 className="text-lg font-medium text-techcorp-900 mb-4">
-          Description
+          Descripción
         </h2>
 
         {/* 

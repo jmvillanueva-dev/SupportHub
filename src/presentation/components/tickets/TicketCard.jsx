@@ -4,6 +4,8 @@ import {
   PRIORITY_COLORS,
   STATUS_COLORS,
   STATUS_ICONS,
+  PRIORITY_LABELS,
+  STATUS_LABELS,
 } from "../../../shared/constants";
 
 /**
@@ -17,7 +19,7 @@ export default function TicketCard({ ticket }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("es-ES", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -48,12 +50,12 @@ export default function TicketCard({ ticket }) {
               <span
                 className={`px-2 py-1 rounded-full text-xs font-medium ${statusClass}`}
               >
-                {statusIcon} {ticket.status.replace("_", " ")}
+                {statusIcon} {STATUS_LABELS[ticket.status] || ticket.status}
               </span>
               <span
                 className={`px-2 py-1 rounded-full text-xs font-medium ${priorityClass}`}
               >
-                {ticket.priority}
+                {PRIORITY_LABELS[ticket.priority] || ticket.priority}
               </span>
             </div>
           </div>
