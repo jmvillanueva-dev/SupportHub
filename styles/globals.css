@@ -37,7 +37,7 @@ body {
   }
 
   .sidebar-link-active {
-    @apply bg-accent-50 text-accent-700 font-medium;
+    @apply bg-blue-50 text-accent-700 font-medium;
   }
 }
 
