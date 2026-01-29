@@ -73,7 +73,7 @@ export default function Layout({ children, title = "SupportHub" }) {
         <Navbar user={user} onLogout={handleLogout} />
 
         {/* Sidebar fija en la izquierda */}
-        <Sidebar user={user} />
+        <Sidebar user={user} onLogout={handleLogout} />
 
         {/* Contenido principal */}
         <main className="pt-16 pl-64">
