@@ -1,50 +1,54 @@
 version: "3.8"
 
 services:
-  # --- LA VÍCTIMA (Tu App Next.js) ---
-  vulndesk_app:
+  # --- VERSIÓN SEGURA (Vulnerabilidades Corregidas) ---
+  supporthub_secure:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: supporthub-vulnerable
+    container_name: supporthub-secure
     ports:
-      - "3000:3000"
+      - "3001:3000" # Puerto externo 3001 para no interferir con la versión vulnerable
     environment:
       - NODE_ENV=production
     volumes:
-      - supporthub-data:/app/data
+      - supporthub-secure-data:/app/data # Volumen separado
     networks:
-      - hacking_net
+      - secure_net
     restart: unless-stopped
 
-  # --- EL ATACANTE (Kali Linux) ---
-  kali_attacker:
+  # --- KALI PARA PRUEBAS (opcional) ---
+  kali_tester:
     image: kalilinux/kali-rolling
-    container_name: kali_attack
-    tty: true               
-    stdin_open: true        
+    container_name: kali_secure
+    tty: true
+    stdin_open: true
     networks:
-      - hacking_net
+      - secure_net
 
 networks:
-  hacking_net:
+  secure_net:
     driver: bridge
 
 volumes:
-  supporthub-data:
-
+  supporthub-secure-data:
 # ============================================
-# SupportHub - Vulnerable Ticket System
-# Para uso educativo en Hacking Ético
+# SupportHub - VERSIÓN SEGURA (Fix Branch)
+# Vulnerabilidades Corregidas - Uso Educativo
 # ============================================
 #
-# Iniciar:
-#   docker-compose up -d
+# Iniciar (desde rama feature/fix-bug):
+#   docker-compose up -d --build
 #
 # Acceder:
-#   http://localhost:3000
+#   http://localhost:3001   (Versión SEGURA)
+#   http://localhost:3000   (Versión vulnerable - otra rama)
 #
 # Entrar a Kali:
-#   docker exec -it kali_attack /bin/bash
+#   docker exec -it kali_secure /bin/bash
+#
+# Para ejecutar AMBAS versiones simultáneamente:
+#   1. En rama main:          docker-compose up -d --build
+#   2. En rama feature/fix-bug: docker-compose up -d --build
 # ============================================
 
