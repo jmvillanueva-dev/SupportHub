@@ -13,7 +13,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm ci
+RUN npm ci && npm rebuild better-sqlite3
 
 # Stage 3: Builder
 FROM base AS builder
