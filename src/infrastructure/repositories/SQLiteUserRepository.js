@@ -2,7 +2,7 @@
  * SQLiteUserRepository - Capa de Infraestructura
  * Implementación del repositorio de usuarios usando SQLite
  *
- * ⚠️ [VULNERABLE] Este repositorio contiene SQL Injection intencional
+ * ✅ [SEGURO] Implementación con prepared statements (consultas parametrizadas)
  */
 const User = require("../../domain/entities/User");
 
@@ -14,28 +14,31 @@ class SQLiteUserRepository {
   /**
    * Busca un usuario por credenciales
    *
-   * ⚠️ [VULNERABLE - SQL INJECTION]
-   * La consulta concatena directamente los parámetros del usuario
-   * Payload de ejemplo: ' OR '1'='1' --
+   * ✅ [SEGURO - PREPARED STATEMENTS]
+   * Se utilizan consultas parametrizadas (?) que separan
+   * los datos de la lógica SQL, previniendo SQL Injection.
+   * Los parámetros se pasan como argumentos separados al método get().
    *
    * @param {string} username
    * @param {string} password
    * @returns {User|null}
    */
   findByCredentials(username, password) {
-    // ⚠️ VULNERABLE: Concatenación directa de strings en la query
-    // En producción NUNCA hacer esto - usar prepared statements
-    const query =
-      "SELECT * FROM users WHERE username = '" +
-      username +
-      "' AND password = '" +
-      password +
-      "'";
+    // ✅ SEGURO: Uso de prepared statements con parámetros posicionales (?)
+    // Los valores se pasan como argumentos separados, no concatenados en el SQL
+    // Esto previene cualquier intento de inyección SQL
+    const stmt = this.db.prepare(
+      "SELECT * FROM users WHERE username = ? AND password = ?",
+    );
 
-    console.log("[SQLiteUserRepository] Query ejecutada:", query);
+    console.log(
+      "[SQLiteUserRepository] Consulta segura ejecutada para usuario:",
+      username,
+    );
 
     try {
-      const row = this.db.prepare(query).get();
+      // Los parámetros se pasan de forma segura al método get()
+      const row = stmt.get(username, password);
 
       if (row) {
         return new User(row);
@@ -43,8 +46,8 @@ class SQLiteUserRepository {
       return null;
     } catch (error) {
       console.error("[SQLiteUserRepository] Error en query:", error.message);
-      // Devolver el error puede ayudar al atacante (error-based SQLi)
-      throw new Error("Database error: " + error.message);
+      // ✅ SEGURO: Mensaje genérico que no expone detalles internos
+      throw new Error("Error de autenticación");
     }
   }
 
