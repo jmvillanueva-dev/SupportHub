@@ -2,84 +2,102 @@
  * CommandService - Capa de Infraestructura
  * Servicio para ejecutar comandos del sistema operativo
  *
- * ⚠️ [VULNERABLE - COMMAND INJECTION]
- * Este servicio NO sanitiza los inputs antes de ejecutar comandos
+ * ✅ [SEGURO - VALIDACIÓN + EXECFILE]
+ * Implementa validación estricta de entrada y usa execFile
  */
-const { exec } = require("child_process");
+const { execFile } = require("child_process");
 const { promisify } = require("util");
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
+
+/**
+ * Expresión regular para validar direcciones IPv4
+ * Formato: xxx.xxx.xxx.xxx donde xxx es 0-255
+ */
+const IPV4_REGEX =
+  /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
+/**
+ * Expresión regular para validar nombres de dominio
+ * Solo permite caracteres alfanuméricos, guiones y puntos
+ */
+const HOSTNAME_REGEX =
+  /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 class CommandService {
   /**
+   * Valida si el input es una dirección IP o hostname válido
+   * @param {string} input - Dirección IP o hostname a validar
+   * @returns {boolean}
+   */
+  isValidTarget(input) {
+    if (!input || typeof input !== "string") {
+      return false;
+    }
+
+    const trimmed = input.trim();
+
+    // Verificar longitud máxima (previene DoS)
+    if (trimmed.length > 253) {
+      return false;
+    }
+
+    // Validar como IPv4 o hostname
+    return IPV4_REGEX.test(trimmed) || HOSTNAME_REGEX.test(trimmed);
+  }
+
+  /**
    * Ejecuta un ping a una dirección IP
    *
-   * ⚠️ [VULNERABLE - OS COMMAND INJECTION]
-   * El parámetro ip se concatena directamente al comando
-   * Payload de ejemplo: 8.8.8.8; cat /etc/passwd
-   * En Windows: 8.8.8.8 & type C:\Windows\System32\drivers\etc\hosts
+   * ✅ [SEGURO - PREVENCIÓN DE COMMAND INJECTION]
+   * 1. Validación estricta con regex (whitelist)
+   * 2. Uso de execFile en lugar de exec (no interpreta shell)
+   * 3. Argumentos pasados como array separado
    *
    * @param {string} ip - Dirección IP a verificar
    * @returns {Promise<{success: boolean, output: string}>}
    */
   async ping(ip) {
-    // Detectar sistema operativo para usar el comando correcto
-    const isWindows = process.platform === "win32";
-
-    // ⚠️ VULNERABLE: Concatenación directa del input del usuario
-    // En producción NUNCA hacer esto - usar validación estricta de IP
-    const command = isWindows
-      ? `ping -n 2 ${ip}` // Windows: 8.8.8.8 & whoami
-      : `ping -c 2 ${ip}`; // Linux: 8.8.8.8; whoami
-
-    console.log("[CommandService] Ejecutando comando:", command);
-
-    try {
-      const { stdout, stderr } = await execAsync(command, {
-        timeout: 10000, // 10 segundos timeout
-        maxBuffer: 1024 * 1024, // 1MB buffer
-      });
-
-      return {
-        success: true,
-        output: stdout || stderr,
-        command: command, // Devolver el comando ejecutado (info adicional para el atacante)
-      };
-    } catch (error) {
+    // ✅ SEGURO: Validación estricta del input con whitelist
+    if (!this.isValidTarget(ip)) {
       return {
         success: false,
-        output: error.message,
-        stderr: error.stderr,
-        command: command,
+        output:
+          "Dirección IP o hostname inválido. Use formato: xxx.xxx.xxx.xxx o dominio.com",
       };
     }
-  }
 
-  /**
-   * Ejecuta un comando arbitrario (MUY PELIGROSO)
-   * Esta función existe "por error del desarrollador"
-   *
-   * @param {string} cmd - Comando a ejecutar
-   * @returns {Promise<{success: boolean, output: string}>}
-   */
-  async executeRaw(cmd) {
-    console.log("[CommandService] ⚠️ Ejecutando comando raw:", cmd);
+    const trimmedIp = ip.trim();
+    const isWindows = process.platform === "win32";
+
+    // ✅ SEGURO: Comando y argumentos separados
+    const command = "ping";
+    const args = isWindows
+      ? ["-n", "2", trimmedIp] // Windows
+      : ["-c", "2", trimmedIp]; // Linux/Mac
+
+    console.log("[CommandService] Ejecutando ping seguro a:", trimmedIp);
 
     try {
-      const { stdout, stderr } = await execAsync(cmd, {
-        timeout: 30000,
+      // ✅ SEGURO: execFile no interpreta metacaracteres de shell
+      // Los argumentos se pasan como array, no como string concatenado
+      const { stdout, stderr } = await execFileAsync(command, args, {
+        timeout: 10000,
         maxBuffer: 1024 * 1024,
       });
 
       return {
         success: true,
         output: stdout || stderr,
+        // ✅ SEGURO: No devolvemos el comando ejecutado
       };
     } catch (error) {
       return {
         success: false,
-        output: error.message,
-        stderr: error.stderr,
+        // ✅ SEGURO: Mensaje genérico sin detalles técnicos internos
+        output: error.killed
+          ? "Tiempo de espera agotado"
+          : "No se pudo alcanzar el destino",
       };
     }
   }
