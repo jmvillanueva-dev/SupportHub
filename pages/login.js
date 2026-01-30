@@ -31,13 +31,26 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
+    // Eliminar espacios en blanco al inicio y final
+    const trimmedData = {
+      username: formData.username.trim(),
+      password: formData.password.trim(),
+    };
+
+    // Validar que no estén vacíos después del trim
+    if (!trimmedData.username || !trimmedData.password) {
+      setError("Usuario y contraseña son requeridos");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(trimmedData),
       });
 
       const data = await response.json();
