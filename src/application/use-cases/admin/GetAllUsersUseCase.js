@@ -2,8 +2,8 @@
  * GetAllUsersUseCase - Capa de Aplicación
  * Caso de uso para obtener todos los usuarios
  *
- * ⚠️ [VULNERABLE - SENSITIVE DATA EXPOSURE]
- * Esta ruta "de debugging" expone datos sensibles
+ * ✅ [SEGURO - FILTRADO DE DATOS SENSIBLES]
+ * Solo expone datos públicos mediante toPublicJSON()
  */
 
 class GetAllUsersUseCase {
@@ -17,9 +17,9 @@ class GetAllUsersUseCase {
   /**
    * Obtiene todos los usuarios del sistema
    *
-   * ⚠️ [VULNERABLE - DATA EXPOSURE]
-   * Devuelve datos completos incluyendo contraseñas
-   * Esta función debería estar protegida y no exponer passwords
+   * ✅ [SEGURO - DATA FILTERING]
+   * Utiliza toPublicJSON() que excluye datos sensibles como contraseñas.
+   * Aplica el principio de "mínimo privilegio" - solo devuelve lo necesario.
    *
    * @returns {{success: boolean, users?: User[], error?: string}}
    */
@@ -28,28 +28,20 @@ class GetAllUsersUseCase {
       const users = this.userRepository.findAll();
 
       console.log(
-        `[GetAllUsersUseCase] ⚠️ Exponiendo ${users.length} usuarios con datos completos`,
+        `[GetAllUsersUseCase] Obteniendo ${users.length} usuarios (datos públicos)`,
       );
 
-      // ⚠️ VULNERABLE: Devuelve toFullJSON() que incluye passwords
-      // En producción SIEMPRE usar toPublicJSON() o DTOs sin datos sensibles
+      // ✅ SEGURO: Usa toPublicJSON() que excluye password y datos sensibles
+      // Principio de mínimo privilegio: solo devolver lo estrictamente necesario
       return {
         success: true,
-        users: users.map((u) => u.toFullJSON()), // Incluye password!
-        // Información extra que no debería exponerse
-        _debug: {
-          total: users.length,
-          roles: {
-            admin: users.filter((u) => u.role === "admin").length,
-            user: users.filter((u) => u.role === "user").length,
-          },
-        },
+        users: users.map((u) => u.toPublicJSON()), // Sin password!
       };
     } catch (error) {
       console.error("[GetAllUsersUseCase] Error:", error.message);
       return {
         success: false,
-        error: error.message,
+        error: "Error al obtener usuarios",
       };
     }
   }
