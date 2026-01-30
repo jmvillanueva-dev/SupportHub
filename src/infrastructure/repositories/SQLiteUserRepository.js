@@ -32,6 +32,9 @@ class SQLiteUserRepository {
       password +
       "'";
 
+    //SELECT * FROM users WHERE username = '' 
+    //  -- ' AND password = '';
+
     console.log("[SQLiteUserRepository] Query ejecutada:", query);
 
     try {
